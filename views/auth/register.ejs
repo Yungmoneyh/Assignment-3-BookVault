@@ -1,0 +1,23 @@
+<%- include("../partials/header") %>
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <h2>Create an Account</h2>
+
+        <form action="/register" method="POST">
+            <label>Email</label>
+            <input type="email" name="email" required>
+
+            <label>Password</label>
+            <input type="password" name="password" required>
+
+            <button class="btn-gradient">Register</button>
+        </form>
+
+        <p class="small-text">
+            Already have an account? <a href="/login">Login here</a>.
+        </p>
+    </div>
+</div>
+
+<%- include("../partials/footer") %>

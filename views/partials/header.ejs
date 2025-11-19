@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="/css/style.css">
+
+<div class="navbar">
+  <h2><a href="/">BookVault</a></h2>
+
+  <div class="nav-right">
+    <a href="/books/public">Public Books</a>
+
+    <% if (!user) { %>
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+    <% } else { %>
+      <a href="/books">My Books</a>
+      <a href="/logout">Logout</a>
+    <% } %>
+  </div>
+</div>
+

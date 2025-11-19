@@ -1,0 +1,19 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <h2>Public Books</h2>
+  <% if (!books || books.length === 0) { %>
+    <p>No public books yet.</p>
+  <% } else { %>
+    <ul class="list-group">
+      <% books.forEach(b => { %>
+        <li class="list-group-item">
+          <strong><%= b.title %></strong> — <%= b.author %>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>
+
