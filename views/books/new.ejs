@@ -1,40 +1,18 @@
-<%- include('../partials/header') %>
+<%- include("../partials/header") %>
 
-<div class="new-book-container">
+<!-- Add New Book page wrapper -->
+<div class="page">
+  <h2>Add a New Book</h2>
 
-    <!-- LEFT SIDE – FORM -->
-    <div class="new-book-form">
-        <h1>New Book</h1>
-
-        <form action="/books" method="POST">
-            <label>Title</label>
-            <input type="text" name="title" required>
-
-            <label>Author</label>
-            <input type="text" name="author" required>
-
-            <button type="submit">Create</button>
-        </form>
-    </div>
-
-    <!-- RIGHT SIDE – FEATURE PANEL -->
-    <div class="new-book-side">
-        <div class="feature-card">
-            <h2>Why Track Your Books?</h2>
-            <ul>
-                <li>Build your personal reading journey</li>
-                <li>Discover new books & share your favorites</li>
-                <li>Stay consistent and organized</li>
-                <li>Save notes and quotes</li>
-                <li>Private & secure to your account</li>
-            </ul>
-        </div>
-
-        <!-- FAINT BACKGROUND BOOK ILLUSTRATION -->
-        <img class="book-illustration" src="/img/book-faint.png" alt="Books">
-    </div>
-
+  <!-- Form to create a new book -->
+  <form method="POST" action="/books">
+    <!-- Input for book title -->
+    <input name="title" placeholder="Title">
+    
+    <!-- Input for book author -->
+    <input name="author" placeholder="Author">
+    
+    <!-- Submit button -->
+    <button class="btn">Create</button>
+  </form>
 </div>
-
-<%- include('../partials/footer') %>
-

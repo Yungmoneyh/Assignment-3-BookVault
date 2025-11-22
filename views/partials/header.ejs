@@ -1,18 +1,35 @@
-<link rel="stylesheet" href="/css/style.css">
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BookVault</title>
+  <!-- Link to main stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Navigation bar -->
+  <nav class="navbar">
+    <div class="brand">
+      <!-- Logo / Home link -->
+      <a href="/">📚 BookVault</a>
+    </div>
 
-<div class="navbar">
-  <h2><a href="/">BookVault</a></h2>
+    <div class="nav-right">
+      <!-- Link to public books page -->
+      <a href="/books/public">Public Books</a>
 
-  <div class="nav-right">
-    <a href="/books/public">Public Books</a>
+      <!-- Show login/register if user not logged in -->
+      <% if (!user) { %>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+      <% } else { %>
+        <!-- Show My Books and Logout if user is logged in -->
+        <a href="/books">My Books</a>
+        <a href="/logout">Logout</a>
+      <% } %>
+    </div>
+  </nav>
 
-    <% if (!user) { %>
-      <a href="/login">Login</a>
-      <a href="/register">Register</a>
-    <% } else { %>
-      <a href="/books">My Books</a>
-      <a href="/logout">Logout</a>
-    <% } %>
-  </div>
-</div>
-
+  <!-- Main content wrapper -->
+  <main class="main">

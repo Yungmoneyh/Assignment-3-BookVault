@@ -1,164 +1,308 @@
-/* ===== GLOBAL ===== */
-body {
-  font-family: "Segoe UI", sans-serif;
-  margin: 0;
-  background: linear-gradient(135deg, #4d4eff, #a86bff);
-  min-height: 100vh;
-  color: #fff;
-}
-
-a {
-  text-decoration: none;
-  color: #fff;
-}
-
+/* RESET & BASE -------------------------------------------------- */
 * {
-  transition: 0.25s ease-in-out;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Make sizing more predictable */
 }
 
-/* ===== NAVBAR ===== */
+:root {
+  /* Define color variables for easy use */
+  --grad1: #4c3aff;
+  --grad2: #9b4dff;
+  --accent: #6c56ff;
+  --muted: rgba(255,255,255,0.85);
+  --glass: rgba(255,255,255,0.07);
+}
+
+body {
+  font-family: "Poppins", Arial, sans-serif;
+  background: linear-gradient(135deg, var(--grad1), var(--grad2)); /* Gradient background */
+  color: #fff;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAVBAR --------------------------------------------------------- */
 .navbar {
+  width: 100%;
+  padding: 18px 38px;
+  background: var(--glass);
+  border-bottom: 1px solid rgba(255,255,255,0.09);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 40px;
-  background: rgba(0,0,0,0.3);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px); /* Glass effect */
+}
+
+.brand a {
+  font-size: 22px;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
 }
 
 .nav-right a {
-  margin-left: 20px;
-  padding: 8px 15px;
-  background: rgba(255,255,255,0.2);
-  border-radius: 8px;
+  margin-left: 12px;
+  padding: 8px 14px;
+  background: rgba(255,255,255,0.12);
+  text-decoration: none;
+  color: white;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.18s;
 }
 
 .nav-right a:hover {
-  background: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.22);
+  transform: translateY(-3px);
 }
 
-/* ===== AUTH FORMS ===== */
-.auth-wrapper {
-  max-width: 400px;
-  margin: 60px auto;
-  padding: 30px;
-  background: rgba(0,0,0,0.25);
+/* MAIN WRAPPER -------------------------------------------------- */
+.main {
+  padding: 40px 20px;
+}
+
+/* HERO ---------------------------------------------------------- */
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 18px;
+  margin-bottom: 50px;
+}
+
+.hero h1 {
+  font-size: 46px;
+  font-weight: 700;
+}
+
+.hero .lead {
+  color: var(--muted);
+  font-size: 20px;
+  margin-top: 12px;
+}
+
+.hero-buttons {
+  margin-top: 26px;
+}
+
+.hero-buttons .btn {
+  margin: 0 8px;
+}
+
+/* BUTTONS ------------------------------------------------------- */
+.btn {
+  display: inline-block;
+  padding: 12px 20px;
   border-radius: 12px;
-  backdrop-filter: blur(10px);
+  text-decoration: none;
+  border: none;
+  background: rgba(255,255,255,0.14);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.18s;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+}
+
+.btn.primary {
+  background: linear-gradient(120deg, var(--accent), #8e75ff);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.btn.danger {
+  background: #ff4f6f;
+}
+
+/* PAGE LAYOUT --------------------------------------------------- */
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 40px;
+}
+
+.page.single {
+  justify-content: center;
+  padding-top: 30px;
+}
+
+.page-content {
+  flex: 1;
+}
+
+.page-image {
+  width: 420px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-image img {
+  width: 100%;
+  border-radius: 15px;
+  filter: drop-shadow(0 6px 25px rgba(0,0,0,0.45));
+  animation: float 4s ease-in-out infinite; /* Floating effect */
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0); }
+}
+
+/* AUTH CARDS ---------------------------------------------------- */
+.auth-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 45px;
+}
+
+.auth-card {
+  width: 380px;
+  padding: 30px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.auth-card h2 {
+  margin-bottom: 14px;
+}
+
+.auth-card label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 600;
+  color: var(--muted);
 }
 
 .auth-card input {
   width: 100%;
+  margin-top: 6px;
   padding: 12px;
-  margin-bottom: 15px;
-  border-radius: 8px;
+  border-radius: 10px;
   border: none;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  font-size: 15px;
 }
 
-.auth-btn {
+.auth-card input:focus {
+  outline: 2px solid var(--accent);
+}
+
+/* ERRORS -------------------------------------------------------- */
+.error {
+  background: #fff1f4;
+  color: #a60033;
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+/* BOOK GRID ----------------------------------------------------- */
+.book-grid {
+  margin-top: 25px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap: 20px;
+}
+
+.book-card {
+  background: rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: 0.18s;
+}
+
+.book-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255,255,255,0.14);
+}
+
+.book-cover {
+  width: 60px;
+  height: 80px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.04));
+}
+
+.book-title {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.book-author {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* FORM CARD ----------------------------------------------------- */
+.card {
+  background: rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.3);
+}
+
+.card label {
+  display: block;
+  margin-top: 14px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.card input {
   width: 100%;
   padding: 12px;
+  margin-top: 7px;
+  border-radius: 10px;
   border: none;
-  background: #222;
+  background: rgba(255,255,255,0.1);
   color: white;
+}
+
+/* EMPTY STATE --------------------------------------------------- */
+.empty {
+  padding: 30px;
+  text-align: center;
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  color: var(--muted);
   font-size: 16px;
-  border-radius: 8px;
 }
 
-.auth-btn:hover {
-  background: #444;
+/* FOOTER -------------------------------------------------------- */
+.footer {
+  margin-top: 50px;
+  padding: 22px 0;
+  text-align: center;
+  color: rgba(255,255,255,0.8);
+  font-size: 14px;
 }
 
-/* ===== New Book Page Layout ===== */
-.new-book-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 60px;
-    min-height: 80vh;
-    position: relative;
-}
+/* RESPONSIVE ---------------------------------------------------- */
+@media (max-width: 900px) {
+  .page {
+    flex-direction: column; /* Stack content on smaller screens */
+  }
 
-/* FORM SIDE */
-.new-book-form {
-    width: 40%;
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(10px);
-    padding: 30px;
-    border-radius: 14px;
-}
-
-.new-book-form h1 {
-    margin-top: 0;
-    color: white;
-}
-
-.new-book-form label {
-    display: block;
-    color: #eee;
-    margin-top: 15px;
-    font-weight: bold;
-}
-
-.new-book-form input {
+  .page-image {
     width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border-radius: 8px;
-    border: none;
-}
-
-.new-book-form button {
     margin-top: 20px;
-    padding: 10px 20px;
-    background: #6a5acd;
-    border: none;
-    border-radius: 8px;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-}
+  }
 
-.new-book-form button:hover {
-    background: #7d6df7;
-}
-
-/* RIGHT SIDE CONTENT */
-.new-book-side {
-    width: 50%;
-    position: relative;
-}
-
-.feature-card {
-    background: rgba(255,255,255,0.18);
-    backdrop-filter: blur(12px);
-    padding: 30px;
-    border-radius: 16px;
-    color: white;
-    max-width: 70%;
-    margin-left: auto;
-    margin-top: 50px;
-}
-
-.feature-card h2 {
-    margin-top: 0;
-}
-
-.feature-card ul {
-    list-style: none;
-    padding: 0;
-}
-
-.feature-card li {
-    margin-bottom: 10px;
-    font-size: 17px;
-}
-
-/* FAINT BACKGROUND ILLUSTRATION */
-.book-illustration {
-    position: absolute;
-    right: -40px;
-    bottom: -20px;
-    width: 430px;
-    opacity: 0.14;
-    pointer-events: none;
+  .hero h1 {
+    font-size: 36px;
+  }
 }

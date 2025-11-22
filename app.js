@@ -1,87 +1,58 @@
-// ========================
-//        SETUP
-// ========================
-const express = require('express');
-const mongoose = require('mongoose');
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
-const methodOverride = require('method-override');
-const dotenv = require('dotenv');
-const path = require('path');
+const express = require("express");
+const mongoose = require("mongoose");
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
+const methodOverride = require("method-override");
+const dotenv = require("dotenv");
+const path = require("path");
 
 dotenv.config();
 const app = express();
 
-// ========================
-//   DATABASE CONNECTION
-// ========================
-const mongoUri = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/bookvault";
-
+// ===== DB CONNECTION =====
+// Connect to MongoDB using URI from .env
 mongoose
-  .connect(mongoUri)
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Connected"))
-  .catch((err) => console.log("❌ MongoDB Error:", err));
+  .catch((err) => console.error("❌ Mongo Error:", err));
 
-// ========================
-//     VIEW ENGINE + STATIC
-// ========================
+// ===== VIEW ENGINE =====
+// Set EJS as the view engine and set views directory
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(express.static(path.join(__dirname, "public"))); // << IMPORTANT
+// ===== MIDDLEWARE =====
+app.use(express.urlencoded({ extended: true })); // parse form data
+app.use(express.json()); // parse JSON data
+app.use(methodOverride("_method")); // support PUT & DELETE via forms
+app.use(express.static(path.join(__dirname, "public"))); // serve static files
 
-app.use(methodOverride("_method"));
-
-// ========================
-//        SESSION
-// ========================
+// ===== SESSION =====
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "supersecret123",
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({
-      mongoUrl: mongoUri,
-    }),
+    secret: process.env.SESSION_SECRET, // secret for signing session ID
+    resave: false, // don't save session if unmodified
+    saveUninitialized: false, // don't create session until something stored
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }), // store sessions in MongoDB
   })
 );
 
-// Makes `user` available in ALL EJS PAGES
+// middleware to expose user ID to EJS templates
 app.use((req, res, next) => {
-  res.locals.user = req.session.user || null;
+  res.locals.user = req.session.userId || null;
   next();
 });
 
-// ========================
-//        ROUTES
-// ========================
-const authRoutes = require("./routes/auth");
-const bookRoutes = require("./routes/books");
+// ===== ROUTES =====
+app.use("/", require("./routes/auth")); // auth routes (login/register/logout)
+app.use("/books", require("./routes/books")); // book CRUD routes
 
-app.use("/", authRoutes);
-app.use("/books", bookRoutes);
-
-// ========================
-//       HOME PAGE
-// ========================
+// HOME PAGE
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index"); // render homepage
 });
 
-// ========================
-//        404 PAGE
-// ========================
-app.use((req, res) => {
-  res.status(404).send("404 Not Found");
-});
-
-// ========================
-//      START SERVER
-// ========================
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
-});
+// START SERVER
+app.listen(3000, () =>
+  console.log("🚀 Server running at http://localhost:3000")
+);

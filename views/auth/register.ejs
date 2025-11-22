@@ -1,23 +1,29 @@
-<%- include("../partials/header") %>
+<%- include('../partials/header') %>
 
-<div class="auth-wrapper">
-    <div class="auth-card">
-        <h2>Create an Account</h2>
+<!-- Register form wrapper -->
+<div class="auth-wrap">
+  <div class="auth-card">
+    <h2>Register</h2>
 
-        <form action="/register" method="POST">
-            <label>Email</label>
-            <input type="email" name="email" required>
+    <!-- Show error message if exists -->
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="error"><%= error %></div>
+    <% } %>
 
-            <label>Password</label>
-            <input type="password" name="password" required>
+    <!-- Registration form -->
+    <form action="/register" method="POST">
+      <label>Username</label>
+      <input type="text" name="username" required>
 
-            <button class="btn-gradient">Register</button>
-        </form>
+      <label>Email</label>
+      <input type="email" name="email" required>
 
-        <p class="small-text">
-            Already have an account? <a href="/login">Login here</a>.
-        </p>
-    </div>
+      <label>Password</label>
+      <input type="password" name="password" required>
+
+      <button class="btn primary">Create Account</button>
+    </form>
+  </div>
 </div>
 
-<%- include("../partials/footer") %>
+<%- include('../partials/footer') %>

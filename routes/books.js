@@ -1,81 +1,56 @@
-// routes/books.js
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Book = require('../models/Book');
+const Book = require("../models/Book");
 
+// Middleware to check login
 function requireLogin(req, res, next) {
-  if (!req.session.user) return res.redirect('/login');
+  if (!req.session.userId) return res.redirect("/login");
   next();
 }
 
-// Public list
-router.get('/public', async (req, res) => {
-  try {
-    const books = await Book.find().sort({ createdAt: -1 }).limit(50);
-    res.render('books/public', { books, user: req.session.user || null });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server error');
-  }
+// PUBLIC BOOKS
+router.get("/public", async (req, res) => {
+  const books = await Book.find().sort({ createdAt: -1 });
+  res.render("books/public", { books });
 });
 
-// Private list - user's books
-router.get('/', requireLogin, async (req, res) => {
-  try {
-    const books = await Book.find({ owner: req.session.user._id }).sort({ createdAt: -1 });
-    res.render('books/index', { books, user: req.session.user });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server error');
-  }
+// USER'S BOOKS
+router.get("/", requireLogin, async (req, res) => {
+  const books = await Book.find({ owner: req.session.userId });
+  res.render("books/index", { books });
 });
 
-// New form
-router.get('/new', requireLogin, (req, res) => res.render('books/new', { user: req.session.user }));
-
-// Create
-router.post('/', requireLogin, async (req, res) => {
-  try {
-    await Book.create({ ...req.body, owner: req.session.user._id });
-    res.redirect('/books');
-  } catch (err) {
-    console.error(err);
-    res.render('books/new', { error: 'Error creating book', user: req.session.user });
-  }
+// NEW BOOK FORM
+router.get("/new", requireLogin, (req, res) => {
+  res.render("books/new");
 });
 
-// Edit
-router.get('/:id/edit', requireLogin, async (req, res) => {
-  try {
-    const book = await Book.findById(req.params.id);
-    if (!book) return res.redirect('/books');
-    res.render('books/edit', { book, user: req.session.user });
-  } catch (err) {
-    console.error(err);
-    res.redirect('/books');
-  }
+// CREATE BOOK
+router.post("/", requireLogin, async (req, res) => {
+  await Book.create({
+    title: req.body.title,
+    author: req.body.author,
+    owner: req.session.userId,
+  });
+  res.redirect("/books");
 });
 
-// Update
-router.put('/:id', requireLogin, async (req, res) => {
-  try {
-    await Book.findByIdAndUpdate(req.params.id, req.body);
-    res.redirect('/books');
-  } catch (err) {
-    console.error(err);
-    res.redirect('/books');
-  }
+// EDIT BOOK FORM
+router.get("/:id/edit", requireLogin, async (req, res) => {
+  const book = await Book.findById(req.params.id);
+  res.render("books/edit", { book });
 });
 
-// Delete
-router.delete('/:id', requireLogin, async (req, res) => {
-  try {
-    await Book.findByIdAndDelete(req.params.id);
-    res.redirect('/books');
-  } catch (err) {
-    console.error(err);
-    res.redirect('/books');
-  }
+// UPDATE BOOK
+router.put("/:id", requireLogin, async (req, res) => {
+  await Book.findByIdAndUpdate(req.params.id, req.body);
+  res.redirect("/books");
+});
+
+// DELETE BOOK
+router.delete("/:id", requireLogin, async (req, res) => {
+  await Book.findByIdAndDelete(req.params.id);
+  res.redirect("/books");
 });
 
 module.exports = router;

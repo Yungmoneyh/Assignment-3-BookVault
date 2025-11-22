@@ -1,19 +1,21 @@
-<%- include('../partials/header') %>
+<%- include("../partials/header") %>
 
-<div class="container mt-4">
+<!-- Public Books page wrapper -->
+<div class="page">
   <h2>Public Books</h2>
-  <% if (!books || books.length === 0) { %>
+
+  <!-- Check if there are any books -->
+  <% if (books.length === 0) { %>
     <p>No public books yet.</p>
   <% } else { %>
-    <ul class="list-group">
-      <% books.forEach(b => { %>
-        <li class="list-group-item">
-          <strong><%= b.title %></strong> — <%= b.author %>
+    <!-- List all public books -->
+    <ul>
+      <% books.forEach(book => { %>
+        <li>
+          <!-- Display book title and author -->
+          <strong><%= book.title %></strong> — <%= book.author %>
         </li>
       <% }) %>
     </ul>
   <% } %>
 </div>
-
-<%- include('../partials/footer') %>
-

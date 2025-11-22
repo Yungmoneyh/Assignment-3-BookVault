@@ -1,16 +1,21 @@
-<%- include("partials/header") %>
+<%- include('partials/header') %>
 
+<!-- Hero section on homepage -->
 <div class="hero">
-    <img src="https://cdn-icons-png.flaticon.com/512/29/29302.png" class="hero-icon">
+  <h1>Welcome to BookVault</h1>
+  <p class="lead">Track and share your reading — clean, private, and simple.</p>
 
-    <h1>Welcome to <span class="accent">BookVault</span></h1>
-    <p class="subtitle">Track your books and share your reading journey with others.</p>
+  <div class="hero-buttons">
+    <!-- Button to browse public books -->
+    <a class="btn primary" href="/books/public">Browse Public Books</a>
 
-    <div class="hero-buttons">
-        <a href="/books/public" class="btn-primary">Browse Public Books</a>
-        <a href="/login" class="btn-secondary">Login</a>
-        <a href="/register" class="btn-secondary">Register</a>
-    </div>
+    <!-- Show account button based on login status -->
+    <% if (!user) { %>
+      <a class="btn" href="/register">Create an Account</a>
+    <% } else { %>
+      <a class="btn" href="/books">View My Books</a>
+    <% } %>
+  </div>
 </div>
 
-<%- include("partials/footer") %>
+<%- include('partials/footer') %>
